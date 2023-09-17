@@ -290,7 +290,7 @@ elif st.session_state.page == 4:
     params = user_input()
     if st.button("Generate"):
         title = create_title(params, genre)
-        premise = create_premise(params,title,genre)
+        premise = create_premise(params,title,genre
         prompt = f"Create a image for a {genre} movie with a {params['setting']} setting and these character(s): {params['character']},\
         set in a {params['mood']} atmosphere  with a {params['color_scheme']} color scheme"
 
