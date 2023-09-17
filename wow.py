@@ -106,11 +106,11 @@ def create_title(params, genre):
 
     return title
 
-def create_premise(params, title):
+def create_premise(params, title, genre):
     # "You will create a one paragraph plot to a horror movie inspired by the following words. The first line is the setting, / 
     # the second is the characters/monsters and the third is the atmosphere and the last line is the title"
     messages = [ {"role": "system", "content":
-                f"You will create a one paragraph plot to a {params['genre']} movie inspired by the following words. The first line is the setting,\
+                f"You will create a one paragraph plot to a {genre} movie inspired by the following words. The first line is the setting,\
                 the second is the characters/monsters and the third is the atmosphere and the last line is the title"} ]
     #keys = list(params.keys())  
 
@@ -118,7 +118,7 @@ def create_premise(params, title):
     if message:
         messages.append({"role": "user", "content": message},)
         premise = openai.ChatCompletion.create(model="gpt-3.5-turbo", messages=messages)
-        premise = title.choices[0].message.content
+        premise = premise.choices[0].message.content
 
     return premise
 
@@ -142,13 +142,15 @@ def overlay(title,poster,user_font):
         font_path = 'fonts/Avenir.ttf'
 
     if os.path.isfile(font_path):
-        font = ImageFont.truetype(font_path,font_size)
+        font = ImageFont.truetype(font_path, font_size)
 
     text_width, text_height = draw.textsize(title,font)
 
     position = ((poster.width - text_width) / 2, 50 / 4 )
 
     draw.text(position, title, font=font, fill = 'white')
+
+    return poster
 
 
 if "page" not in st.session_state:
@@ -194,29 +196,6 @@ if st.session_state.page == 0:
     st.button("Sci-Fi", on_click=scifi)
         
 elif st.session_state.page == 1:
-    # def PATGenerator(setting, character, mood):
-    #     openai.api_key = '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'
-    #     messages = [ {"role": "system", "content":
-    #         "You will create a short horror movie title inspired by the following list of words. The inputs are as follows The first line is the setting, the second is the characters/monsters and the third is the atmosphere"} ]
-    #     prompts = [ {"role": "system", "content":
-    #         "You will create a one paragraph plot to a horror movie inspired by the following words. The first line is the setting, the second is the characters/monsters and the third is the atmosphere and the last line is the title"} ]
-    #     message = (setting + "\n" + character + "\n" + mood)
-    #     if message:
-    #         messages.append({"role": "user", "content": message})
-    #         title = openai.ChatCompletion.create(model="gpt-3.5-turbo", messages=messages)
-    #         reply = title.choices[0].message.content
-    #     st.write(reply)
-    #     messages.append({"role": "assistant", "content": reply})
-    #     prompt = (setting  + "\n" + character + "\n" + mood + "\n" + reply)
-    #     if prompt:
-    #         prompts.append({"role": "user", "content": prompt})
-    #         plot = openai.ChatCompletion.create(model="gpt-3.5-turbo", messages=prompts)
-    #         reply2 = plot.choices[0].message.content
-    #     st.write(reply2)
-    #     prompts.append({"role": "assistant", "content": reply2})
-
-
-
 # Parameters?
 # setting, characters, mood, color scheme, text style
 
@@ -224,17 +203,21 @@ elif st.session_state.page == 1:
     params = user_input()
     if st.button("Generate"):
         title = create_title(params, genre)
-        premise = create_premise(params,genre)
+        premise = create_premise(params,title,genre)
         prompt = f"Create a image for a {genre} movie with a {params['setting']} setting and these character(s): {params['character']},\
         set in a {params['mood']} atmosphere  with a {params['color_scheme']} color scheme"
 
         poster = generate_poster(prompt)
         poster = overlay(title, poster, params['user_font'])
+
         col1, col2, col3 = st.columns([1,6,1])
         with col1:
             st.write("")
         with col2:
-            st.image(poster, use_column_width=True)
+            if poster is not None:
+                st.image(poster, use_column_width=True)
+            else:
+                st.write("Image is None.")
         with col3:
             st.write("")
 
@@ -244,7 +227,7 @@ elif st.session_state.page == 2:
     params = user_input()
     if st.button("Generate"):
         title = create_title(params, genre)
-        premise = create_premise(params,genre)
+        premise = create_premise(params,title,genre)
         prompt = f"Create a image for a {genre} movie with a {params['setting']} setting and these character(s): {params['character']},\
         set in a {params['mood']} atmosphere  with a {params['color_scheme']} color scheme"
 
@@ -265,7 +248,7 @@ elif st.session_state.page == 3:
 
     if st.button("Generate"):
         title = create_title(params, genre)
-        premise = create_premise(params,genre)
+        premise = create_premise(params,title,genre)
         prompt = f"Create a image for a {genre} movie with a {params['setting']} setting and these character(s): {params['character']},\
         set in a {params['mood']} atmosphere  with a {params['color_scheme']} color scheme"
 
@@ -286,7 +269,7 @@ elif st.session_state.page == 3:
 
     if st.button("Generate"):
         title = create_title(params, genre)
-        premise = create_premise(params,genre)
+        premise = create_premise(params,title,genre)
         prompt = f"Create a image for a {genre} movie with a {params['setting']} setting and these character(s): {params['character']},\
         set in a {params['mood']} atmosphere  with a {params['color_scheme']} color scheme"
 
@@ -307,7 +290,7 @@ elif st.session_state.page == 4:
     params = user_input()
     if st.button("Generate"):
         title = create_title(params, genre)
-        premise = create_premise(params,genre)
+        premise = create_premise(params,title,genre)
         prompt = f"Create a image for a {genre} movie with a {params['setting']} setting and these character(s): {params['character']},\
         set in a {params['mood']} atmosphere  with a {params['color_scheme']} color scheme"
 
