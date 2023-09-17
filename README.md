@@ -10,6 +10,9 @@ Make sure to:
 
 ```pip install PIL```
 
+```pip install emoji```
+
+
 When running the program, type:
 
 ```streamlit run wow.py```
