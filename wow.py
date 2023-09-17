@@ -1,7 +1,6 @@
 import openai
 from sqlalchemy import PrimaryKeyConstraint
 import streamlit as st
-import openai
 import emoji
 from PIL import Image, ImageOps, ImageDraw, ImageFont
 from io import BytesIO
@@ -37,8 +36,8 @@ def overlay(title, poster, user_font):
     draw = ImageDraw.Draw(poster)
     font_size = int(poster.size[0] * 0.05)
 
-    if user_font == 'Impact':
-        font_path = 'fonts/Impact.TTF'
+    if user_font == 'Dancing Script':
+        font_path = 'fonts/DancingScript-Regular.ttf'
     elif user_font == 'Trajan Pro':
         font_path = 'fonts/TrajanPro.ttf'
     elif user_font == 'Helvetica Neue':
@@ -49,8 +48,12 @@ def overlay(title, poster, user_font):
         font_path = 'fonts/BankGothic.ttf'
     elif user_font == 'Franklin Gothic':
         font_path = 'fonts/FranklinGothic.TTF'
+    elif user_font == 'Russo One':
+        font_path = 'fonts/RussoOne-Regular.ttf'
+    elif user_font == 'Bebas Neue':
+        font_path = 'fonts/BebasNeue-Regular.ttf'
     else:
-        font_path = 'fonts/Avenir.ttf'
+        font_path = 'fonts/Satisfy-Regular.ttf'
 
     if os.path.isfile(font_path):
         font = ImageFont.truetype(font_path,font_size)
@@ -86,14 +89,14 @@ def user_input():
     color_scheme = st.selectbox('Choose your color scheme', ['monochromatic', 'analogous', 'complementary', 'triadic', 'tetradic'])
     params['color_scheme'] = color_scheme
 
-    user_font = st.selectbox("Select Poster Font: ", ['Impact','Trajan Pro', 'Helvetica Neue', 'Futura', 'Bank Gothic', 'Franklin Gothic', 'Avenir'])
+    user_font = st.selectbox("Select Poster Font: ", ['Dancing Script','Trajan Pro', 'Helvetica Neue', 'Futura', 'Bank Gothic', 'Franklin Gothic', 'Russo One', 'Bebas Neue', 'Satisfy'])
     params['user_font'] = user_font
 
     return params
 
 def create_title(params, genre):
     messages = [ {"role": "system", "content":
-                f"You will create a short {genre} movie title inspired by the following list of words. \
+                f"You will create an extremely short {genre} movie title inspired by the following list of words. \
                 The inputs are as follows The first line is the setting, \
                 the second is the characters/monsters and the third is the atmosphere"} ]
     #keys = list(params.keys())  
@@ -126,8 +129,8 @@ def overlay(title,poster,user_font):
     draw = ImageDraw.Draw(poster)
     font_size = int(poster.size[0] * 0.05)
 
-    if user_font == 'Impact':
-        font_path = 'fonts/Impact.TTF'
+    if user_font == 'Dancing Script':
+        font_path = 'fonts/DancingScript-Regular.ttf'
     elif user_font == 'Trajan Pro':
         font_path = 'fonts/TrajanPro.ttf'
     elif user_font == 'Helvetica Neue':
@@ -138,8 +141,12 @@ def overlay(title,poster,user_font):
         font_path = 'fonts/BankGothic.ttf'
     elif user_font == 'Franklin Gothic':
         font_path = 'fonts/FranklinGothic.TTF'
+    elif user_font == 'Russo One':
+        font_path = 'fonts/RussoOne-Regular.ttf'
+    elif user_font == 'Bebas Neue':
+        font_path = 'fonts/BebasNeue-Regular.ttf'
     else:
-        font_path = 'fonts/Avenir.ttf'
+        font_path = 'fonts/Satisfy-Regular.ttf'
 
     if os.path.isfile(font_path):
         font = ImageFont.truetype(font_path, font_size)
@@ -214,10 +221,8 @@ elif st.session_state.page == 1:
         with col1:
             st.write("")
         with col2:
-            if poster is not None:
-                st.image(poster, use_column_width=True)
-            else:
-                st.write("Image is None.")
+            st.image(poster, use_column_width=True)
+            st.write(premise)
         with col3:
             st.write("")
 
@@ -238,6 +243,7 @@ elif st.session_state.page == 2:
             st.write("")
         with col2:
             st.image(poster, use_column_width=True)
+            st.write(premise)
         with col3:
             st.write("") 
         
@@ -259,6 +265,7 @@ elif st.session_state.page == 3:
             st.write("")
         with col2:
             st.image(poster, use_column_width=True)
+            st.write(premise)
         with col3:
             st.write("") 
         
@@ -280,6 +287,7 @@ elif st.session_state.page == 3:
             st.write("")
         with col2:
             st.image(poster, use_column_width=True)
+            st.write(premise)
         with col3:
             st.write("") 
 
@@ -290,7 +298,7 @@ elif st.session_state.page == 4:
     params = user_input()
     if st.button("Generate"):
         title = create_title(params, genre)
-        premise = create_premise(params,title,genre
+        premise = create_premise(params,title,genre)
         prompt = f"Create a image for a {genre} movie with a {params['setting']} setting and these character(s): {params['character']},\
         set in a {params['mood']} atmosphere  with a {params['color_scheme']} color scheme"
 
@@ -301,6 +309,7 @@ elif st.session_state.page == 4:
             st.write("")
         with col2:
             st.image(poster, use_column_width=True)
+            st.write(premise)
         with col3:
             st.write("") 
         
