@@ -106,11 +106,11 @@ def create_title(params, genre):
 
     return title
 
-def create_premise(params, title):
+def create_premise(params, title, genre):
     # "You will create a one paragraph plot to a horror movie inspired by the following words. The first line is the setting, / 
     # the second is the characters/monsters and the third is the atmosphere and the last line is the title"
     messages = [ {"role": "system", "content":
-                f"You will create a one paragraph plot to a {params['genre']} movie inspired by the following words. The first line is the setting,\
+                f"You will create a one paragraph plot to a {genre} movie inspired by the following words. The first line is the setting,\
                 the second is the characters/monsters and the third is the atmosphere and the last line is the title"} ]
     #keys = list(params.keys())  
 
@@ -224,7 +224,7 @@ elif st.session_state.page == 1:
     params = user_input()
     if st.button("Generate"):
         title = create_title(params, genre)
-        premise = create_premise(params,genre)
+        premise = create_premise(params,title,genre)
         prompt = f"Create a image for a {genre} movie with a {params['setting']} setting and these character(s): {params['character']},\
         set in a {params['mood']} atmosphere  with a {params['color_scheme']} color scheme"
 
@@ -244,7 +244,7 @@ elif st.session_state.page == 2:
     params = user_input()
     if st.button("Generate"):
         title = create_title(params, genre)
-        premise = create_premise(params,genre)
+        premise = create_premise(params,title,genre)
         prompt = f"Create a image for a {genre} movie with a {params['setting']} setting and these character(s): {params['character']},\
         set in a {params['mood']} atmosphere  with a {params['color_scheme']} color scheme"
 
@@ -265,7 +265,7 @@ elif st.session_state.page == 3:
 
     if st.button("Generate"):
         title = create_title(params, genre)
-        premise = create_premise(params,genre)
+        premise = create_premise(params,title,genre)
         prompt = f"Create a image for a {genre} movie with a {params['setting']} setting and these character(s): {params['character']},\
         set in a {params['mood']} atmosphere  with a {params['color_scheme']} color scheme"
 
@@ -286,7 +286,7 @@ elif st.session_state.page == 3:
 
     if st.button("Generate"):
         title = create_title(params, genre)
-        premise = create_premise(params,genre)
+        premise = create_premise(params,title,genre)
         prompt = f"Create a image for a {genre} movie with a {params['setting']} setting and these character(s): {params['character']},\
         set in a {params['mood']} atmosphere  with a {params['color_scheme']} color scheme"
 
@@ -307,7 +307,7 @@ elif st.session_state.page == 4:
     params = user_input()
     if st.button("Generate"):
         title = create_title(params, genre)
-        premise = create_premise(params,genre)
+        premise = create_premise(params,title, genre)
         prompt = f"Create a image for a {genre} movie with a {params['setting']} setting and these character(s): {params['character']},\
         set in a {params['mood']} atmosphere  with a {params['color_scheme']} color scheme"
 
