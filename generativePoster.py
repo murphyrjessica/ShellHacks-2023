@@ -67,12 +67,6 @@ def overlay(title, poster, user_font):
 
 # Parameters
 def user_input():
-	
-    # setting = st.text_input('Input a Setting:')
-    # character = st.text_input('Input Characters/Monsters(Seperated by a Comma)')
-    # mood = st.text_input('Input your Atmosphere')
-    # color_scheme = st.selectbox('Choose your color scheme', [])
-    # font = st.selectbox('Choose Font Type', [])
 
     params = {}
 
@@ -98,7 +92,6 @@ def create_title(params, genre):
                 f"You will create an extremely short {genre} movie title inspired by the following list of words. \
                 The inputs are as follows The first line is the setting, \
                 the second is the characters/monsters and the third is the atmosphere"} ]
-    #keys = list(params.keys())  
 
     message = (params['setting'] + " " + params['character'] + " " + " " + params['mood'])
     if message:
@@ -124,40 +117,6 @@ def create_premise(params, title, genre):
 
     return premise
 
-def overlay(title,poster,user_font):
-    draw = ImageDraw.Draw(poster)
-    font_size = int(poster.size[0] * 0.05)
-
-    if user_font == 'Dancing Script':
-        font_path = 'fonts/DancingScript-Regular.ttf'
-    elif user_font == 'Trajan Pro':
-        font_path = 'fonts/TrajanPro.ttf'
-    elif user_font == 'Helvetica Neue':
-        font_path = 'fonts/HelveticaNeue.ttf'
-    elif user_font == 'Futura':
-        font_path = 'fonts/Futura.ttf'
-    elif user_font == 'Bank Gothic':
-        font_path = 'fonts/BankGothic.ttf'
-    elif user_font == 'Franklin Gothic':
-        font_path = 'fonts/FranklinGothic.TTF'
-    elif user_font == 'Russo One':
-        font_path = 'fonts/RussoOne-Regular.ttf'
-    elif user_font == 'Bebas Neue':
-        font_path = 'fonts/BebasNeue-Regular.ttf'
-    else:
-        font_path = 'fonts/Satisfy-Regular.ttf'
-
-    if os.path.isfile(font_path):
-        font = ImageFont.truetype(font_path, font_size)
-
-    text_width, text_height = draw.textsize(title,font)
-
-    position = ((poster.width - text_width) / 2, 50 / 4 )
-
-    draw.text(position, title, font=font, fill = 'white')
-
-    return poster
-
 if "page" not in st.session_state:
     st.session_state.page = 0
 
@@ -179,23 +138,6 @@ if st.session_state.page == 0:
     c2.image(image, width=500)
     st.write("<div style='text-align: center;'>Discover creativity at its finest on our website powered by OpenAI's ChatGPT and DALL·E. Simply input your ideas, and watch as our AI crafts captivating movie poster titles and synopses that will leave you excited for a film that doesn't even exist yet.</div>", unsafe_allow_html=True)
     st.write("\n")
-    # st.subheader("How to:")
-
-    # c1, c2, c3 = st.columns([3, 3.5, 1.8])
-    # c1.write("Step 1: Choose a genre ")
-    # c2.write("Step 2: Complete the catagories ")
-    # c3.write("Step 3: Generate! ")
-
-    # c1, c2, c3 = st.columns([2.5, 3.8, 1.8])
-    # image = Image.open("Menu1.png")
-    # c1.image(image, width=200)
-    # video_file = open('movievideo2.mp4', 'rb')
-    # video_bytes = video_file.read()
-    # c2.video(video_bytes)
-    # video_file = open("Generate1.mp4", 'rb')
-    # video_bytes = video_file.read()
-    # c3.video(video_bytes)
-
 
     m = st.markdown("""
         <style>
@@ -210,29 +152,6 @@ if st.session_state.page == 0:
     st.button("Sci-Fi", on_click=scifi)
         
 elif st.session_state.page == 1:
-    # def PATGenerator(setting, character, mood):
-    #     openai.api_key = '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'
-    #     messages = [ {"role": "system", "content":
-    #         "You will create a short horror movie title inspired by the following list of words. The inputs are as follows The first line is the setting, the second is the characters/monsters and the third is the atmosphere"} ]
-    #     prompts = [ {"role": "system", "content":
-    #         "You will create a one paragraph plot to a horror movie inspired by the following words. The first line is the setting, the second is the characters/monsters and the third is the atmosphere and the last line is the title"} ]
-    #     message = (setting + "\n" + character + "\n" + mood)
-    #     if message:
-    #         messages.append({"role": "user", "content": message})
-    #         title = openai.ChatCompletion.create(model="gpt-3.5-turbo", messages=messages)
-    #         reply = title.choices[0].message.content
-    #     st.write(reply)
-    #     messages.append({"role": "assistant", "content": reply})
-    #     prompt = (setting  + "\n" + character + "\n" + mood + "\n" + reply)
-    #     if prompt:
-    #         prompts.append({"role": "user", "content": prompt})
-    #         plot = openai.ChatCompletion.create(model="gpt-3.5-turbo", messages=prompts)
-    #         reply2 = plot.choices[0].message.content
-    #     st.write(reply2)
-    #     prompts.append({"role": "assistant", "content": reply2})
-
-
-
 # Parameters?
 # setting, characters, mood, color scheme, text style
 
